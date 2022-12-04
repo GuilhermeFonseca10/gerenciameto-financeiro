@@ -10,19 +10,21 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('categoria', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Categoria',
+            name='Lancamento',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('descricao', models.CharField(max_length=40, unique=True, verbose_name='descrição')),
-                ('is_active', models.BooleanField(default=True, verbose_name='ativa')),
-                ('tipo', models.CharField(choices=[('E', 'Entrada'), ('S', 'Saída'), ('T', 'Todos')], default='S', max_length=1, verbose_name='tipo')),
+                ('lancamento', models.CharField(max_length=100)),
+                ('valor', models.DecimalField(decimal_places=2, default=0, max_digits=10)),
+                ('data', models.DateField()),
+                ('categorias', models.ManyToManyField(to='categoria.Categoria')),
             ],
             options={
-                'ordering': ['descricao'],
+                'ordering': ['-valor', 'lancamento'],
             },
         ),
     ]

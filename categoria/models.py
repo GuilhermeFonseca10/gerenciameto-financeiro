@@ -15,6 +15,8 @@ class Categoria(models.Model):
     is_active = models.BooleanField(u'ativa', default=True)
     tipo = models.CharField(u'tipo', choices=TIPOS, default='S', max_length=1)
 
+    def __str__(self):
+        return str(self.descricao)
 
     class Meta:
         ordering = ['descricao']
