@@ -9,6 +9,11 @@ from .models import Usuario
 class UsuarioListView(LoginRequiredMixin, ListView):
 	model = Usuario
 
+	def get_queryset(self):
+		usuario_id = self.request.user.id
+
+		return Usuario.objects.filter(id=usuario_id)
+
 
 class UsuarioCreateView(LoginRequiredMixin, CreateView):
 	model = Usuario

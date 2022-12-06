@@ -9,6 +9,7 @@ class Lancamento(models.Model):
     
     categorias = models.ManyToManyField(Categoria)
     
+    
 
     def __str__(self):
         return str(self.lancamento)
