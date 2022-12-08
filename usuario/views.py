@@ -19,14 +19,14 @@ class UsuarioCreateView(LoginRequiredMixin, CreateView):
 	model = Usuario
 	fields = ['tipo', 'nome', 'email', 'password', 'is_active']
 	success_url = 'usuario_list'
-
+	
 
 class UsuarioUpdateView(LoginRequiredMixin, UpdateView):
 	model = Usuario
-	fields = ['tipo', 'nome', 'email', 'is_active']
+	fields = ['nome', 'email']
 	success_url = 'usuario_list'
 
 
-class UsuarioDeleteView(LoginRequiredMixin, DeleteView):
-	model = Usuario
-	success_url = 'usuario_list'
+#class UsuarioDeleteView(LoginRequiredMixin, DeleteView):
+	#model = Usuario
+	#success_url = 'usuario_list'

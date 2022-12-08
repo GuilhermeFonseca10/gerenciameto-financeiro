@@ -1,11 +1,13 @@
 {% extends 'core/bootstrap.html' %}
 
 {% load bootstrap3 %}
+{% block title %}
 
+{% endblock %}
 {% block bootstrap3_content %}
 	{% include 'core/includes/_menu_principal.html' %}
     <div class="container" style="margin-bottom: 50px;">
-        <h1>{% block title %}(no title){% endblock %}</h1>
+       
 
         {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
 

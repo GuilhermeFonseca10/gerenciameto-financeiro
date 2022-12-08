@@ -22,3 +22,7 @@ class Conta(models.Model):
     @property
     def get_absolute_url(self):
         return reverse('conta_update', args=[str(self.id)])
+
+    @property
+    def get_delete_url(self):
+        return reverse('conta_delete', args=[str(self.id)])

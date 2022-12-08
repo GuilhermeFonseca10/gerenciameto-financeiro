@@ -5,15 +5,11 @@ from django.core.urlresolvers import reverse
 
 class Categoria(models.Model):
 
-    TIPOS = (
-        ('E','Entrada'),
-        ('S', u'Saída'),
-        ('T', 'Todos')
-    )
+ 
 
     descricao = models.CharField(u'descrição', max_length=40, unique=True)
     is_active = models.BooleanField(u'ativa', default=True)
-    tipo = models.CharField(u'tipo', choices=TIPOS, default='S', max_length=1)
+   
 
     def __str__(self):
         return str(self.descricao)
@@ -31,3 +27,7 @@ class Categoria(models.Model):
     @property
     def get_absolute_url(self):
         return reverse('categoria_update', args=[str(self.id)])
+
+    @property
+    def get_delete_url(self):
+        return reverse('categoria_delete', args=[str(self.id)])
