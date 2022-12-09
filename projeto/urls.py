@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'categoria/', include('categoria.urls')),
     url(r'conta/', include('conta.urls')),
     url(r'lancamento/', include('lancamento.urls')),
+    url(r'lucro/', include('lucro.urls')),
     url(r'^accounts/', include('django.contrib.auth.urls'))
     
 ]

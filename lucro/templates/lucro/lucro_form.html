@@ -5,17 +5,18 @@
 {% endblock %}
 
 {% block title %}
-	
-	Cadastro de conta
+Cadastro de lucros
 {% endblock %}
 
 {% block content %}
-<h1>{% bootstrap_icon 'folder-open' %} Cadastro de conta</h1>
+<h1>{% bootstrap_icon 'folder-open' %} Cadastro de lucros</h1>
 <form class="form" role="form" method="POST">
   {% csrf_token %}
   {{ form.non_field_errors }}
   {% bootstrap_form form %}
-  {% buttons submit='Gravar' %}
+  <p>Verifique se todos os dados estão corretos, você não poderá mais editar.</p>
+  {% buttons submit='Confirmar' %}
+
     <a href="javascript:history.go(-1);" class="btn btn-info" role="button">Voltar</a>
   {% endbuttons %}
 </form>

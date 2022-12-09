@@ -13,5 +13,10 @@ class LancamentoForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(LancamentoForm, self).__init__(*args, **kwargs)
-        self.initial["usuario"] = get_current_user().id
+        user = get_current_user()
+        self.initial["usuario"] = user.id
+        contas = Conta.objects.filter(usuario=user)
+        self.fields["conta"].queryset = contas
+
+        
     

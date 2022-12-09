@@ -1,11 +1,13 @@
 from django.db import models
-from categoria.models import Categoria
+
+
 from django.core.urlresolvers import reverse
+from categoria.models import Categoria
 from usuario.models import Usuario
 from conta.models import Conta
 # Create your models here.
-class Lancamento(models.Model):
-    dispesa = models.CharField(max_length=100)
+class Lucro(models.Model):
+    ganhos = models.CharField(max_length=100)
     valor = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     data = models.DateField()
     
@@ -20,18 +22,21 @@ class Lancamento(models.Model):
 
     def __unicode__(self):
         
-        return '%s: R$ %d' % (self.dispesa, self.valor)
+        return '%s: R$ %d' % (self.ganhos, self.valor)
 
     class Meta:
-        ordering = ['-valor','dispesa']
+        ordering = ['-valor','ganhos']
 
 
     @property
     def get_absolute_url(self):
-        return reverse('lancamento_update', args=[str(self.id)])
+        return reverse('lucro_update', args=[str(self.id)])
 
     
     @property
     def get_delete_url(self):
-        return reverse('lancamento_delete', args=[str(self.id)])
+        return reverse('lucro_delete', args=[str(self.id)])
 
+
+
+# Create your models here.

@@ -2,7 +2,8 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from usuario.models import Usuario
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class Conta(models.Model):
     descricao = models.CharField(u'Descrição', max_length=40)
@@ -17,6 +18,7 @@ class Conta(models.Model):
 
     class Meta:
         ordering = ['-saldo','descricao']
+        
 
 
     @property
@@ -26,3 +28,15 @@ class Conta(models.Model):
     @property
     def get_delete_url(self):
         return reverse('conta_delete', args=[str(self.id)])
+
+from lancamento.models import Lancamento
+@receiver(post_save, sender=Lancamento)
+def update_saldo(sender, instance, **kwargs):
+    instance.conta.saldo -= instance.valor
+    instance.conta.save()
+
+from lucro.models import Lucro
+@receiver(post_save, sender=Lucro)
+def update_saldo(sender, instance, **kwargs):
+    instance.conta.saldo += instance.valor
+    instance.conta.save()

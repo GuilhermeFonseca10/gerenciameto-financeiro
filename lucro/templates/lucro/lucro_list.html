@@ -2,19 +2,19 @@
 {% load bootstrap3 %}
 
 {% block title %}
- Dispesas
+ Lucro
 {% endblock %}
 
 {% block content %}
-<h1>{% bootstrap_icon 'glyphicon glyphicon-usd' %}Dispesas</h1>
+<h1>{% bootstrap_icon 'glyphicon glyphicon-piggy-bank' %} Lucros</h1>
 	<div class="panel panel-default">
 	  <div class="panel-body">
-	    <a href="{% url 'lancamento_create' %}" class="btn btn-md btn-primary">{% bootstrap_icon 'floppy-disk' %} Cadastrar dispesas</a>
+	    <a href="{% url 'lucro_create' %}" class="btn btn-md btn-primary">{% bootstrap_icon 'floppy-disk' %} Cadastrar lucros</a>
 	  </div>
 	</div>
 	<table class="table table-hover">
   		<thead>
-  			<th>Dispesa</th>
+  			<th>Ganhos</th>
   			<th>Valor</th>
 			  <th>Data</th>
 			  <th>Conta</th>
@@ -25,12 +25,14 @@
   		</thead>
   		<tbody>
 			
-  			{% for dispesa in object_list %}
+  			{% for ganho in object_list %}
 				<tr>
-					<td>{{ dispesa.dispesa }}</td>
-					<td>{{ dispesa.valor }}</td>
-					<td>{{ dispesa.data }}</td>
-					<td>{{ dispesa.conta }}</td>
+					<td>{{ ganho.ganhos }}</td>
+					<td>{{ ganho.valor }}</td>
+					<td>{{ ganho.data }}</td>
+					<td>{{ ganho.conta }}</td>
+					
+
 					
 					
 					

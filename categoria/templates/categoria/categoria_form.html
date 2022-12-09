@@ -5,10 +5,11 @@
 {% endblock %}
 
 {% block title %}
-	{% bootstrap_icon 'user' %} Cadastro de categoria de lançamentos
+Cadastro de categoria
 {% endblock %}
 
 {% block content %}
+<h1>{% bootstrap_icon 'user' %} Cadastro de categorias</h1>
 <form class="form" role="form" method="POST">
   {% csrf_token %}
   {{ form.non_field_errors }}

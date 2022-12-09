@@ -9,7 +9,7 @@ class Categoria(models.Model):
 
     descricao = models.CharField(u'descrição', max_length=40, unique=True)
     is_active = models.BooleanField(u'ativa', default=True)
-   
+    
 
     def __str__(self):
         return str(self.descricao)

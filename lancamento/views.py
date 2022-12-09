@@ -19,20 +19,18 @@ class LancamentoListView(LoginRequiredMixin, ListView):
 class LancamentoCreateView(LoginRequiredMixin, CreateView):
 	model = Lancamento 
 	
-	menos = Conta
 	form_class = LancamentoForm
 	
 	
 	#fields = ['dispesa', 'valor', 'categorias', 'data', 'conta']
 	
-   
 
 	success_url = 'lancamento_list'
 	
 
 class LancamentoUpdateView(LoginRequiredMixin, UpdateView):
 	model = Lancamento
-	fields = ['dispesa', 'valor', 'categorias', 'data']
+	fields = ['dispesa', 'categorias', 'data']
 	success_url = 'lancamento_list'
 
 class LancamentoDeleteView(LoginRequiredMixin, DeleteView):

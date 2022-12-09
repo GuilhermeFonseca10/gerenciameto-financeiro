@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'categoria',
     'conta',
     'lancamento',
+    'lucro',
 ]
 
 MIDDLEWARE = [

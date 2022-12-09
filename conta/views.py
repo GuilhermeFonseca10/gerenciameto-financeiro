@@ -20,9 +20,12 @@ class ContaListView(LoginRequiredMixin, ListView):
 
 class ContaCreateView(LoginRequiredMixin, CreateView):
 	model = Conta
-	
+	def get_queryset(self):
+		usuario = self.request.user
+		
+		return Conta.objects.filter(usuario=usuario)
 	form_class = ContaForm
-
+	
 	success_url = 'conta_list'
 
 	#def form_valid(self, form):
@@ -40,3 +43,4 @@ class ContaUpdateView(LoginRequiredMixin, UpdateView):
 class ContaDeleteView(LoginRequiredMixin, DeleteView):
 	model = Conta
 	success_url = 'conta_list'
+
