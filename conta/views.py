@@ -16,7 +16,7 @@ class ContaListView(LoginRequiredMixin, ListView):
 		usuario = self.request.user
 		
 		return Conta.objects.filter(usuario=usuario)
-	
+		#return Conta.objects.all()
 
 class ContaCreateView(LoginRequiredMixin, CreateView):
 	model = Conta

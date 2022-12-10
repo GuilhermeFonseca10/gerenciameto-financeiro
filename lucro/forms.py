@@ -13,5 +13,7 @@ class LucroForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(LucroForm, self).__init__(*args, **kwargs)
-        self.initial["usuario"] = get_current_user().id
-    
+        user = get_current_user()
+        self.initial["usuario"] = user.id
+        contas = Conta.objects.filter(usuario=user)
+        self.fields["conta"].queryset = contas

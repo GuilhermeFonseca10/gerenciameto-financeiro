@@ -37,6 +37,6 @@ def update_saldo(sender, instance, **kwargs):
 
 from lucro.models import Lucro
 @receiver(post_save, sender=Lucro)
-def update_saldo(sender, instance, **kwargs):
+def update_saldo_lucro(sender, instance, **kwargs):
     instance.conta.saldo += instance.valor
     instance.conta.save()

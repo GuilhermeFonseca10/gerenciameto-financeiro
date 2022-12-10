@@ -12,5 +12,4 @@ class ContaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ContaForm, self).__init__(*args, **kwargs)
         self.initial["usuario"] = get_current_user().id
-        self.fields["usuario"].widget.attrs["disabled"] = True
-
+        #self.fields["usuario"].widget.attrs["disabled"] = True

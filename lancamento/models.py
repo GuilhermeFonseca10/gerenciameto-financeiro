@@ -11,7 +11,7 @@ class Lancamento(models.Model):
     
     categorias = models.ManyToManyField(Categoria)
     usuario = models.ForeignKey(Usuario, on_delete=models.PROTECT, null=True, blank=True)
-    conta = models.ForeignKey(Conta, on_delete=models.PROTECT, null=True, blank=True)
+    conta = models.ForeignKey(Conta, on_delete=models.CASCADE, null=True, blank=True)
     
    
 
