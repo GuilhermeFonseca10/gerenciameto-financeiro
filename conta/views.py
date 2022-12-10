@@ -23,6 +23,7 @@ class ContaCreateView(LoginRequiredMixin, CreateView):
 	def get_queryset(self):
 		usuario = self.request.user
 		
+		
 		return Conta.objects.filter(usuario=usuario)
 	form_class = ContaForm
 	

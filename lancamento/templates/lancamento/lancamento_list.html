@@ -20,7 +20,7 @@
 			  <th>Conta</th>
 			
   			
-  			<th class="text-center">Editar</th>
+  			<!--<th class="text-center">Editar</th>-->
 			<th class="text-center">Excluir</th>
   		</thead>
   		<tbody>
@@ -31,12 +31,13 @@
 					<td>{{ dispesa.valor }}</td>
 					<td>{{ dispesa.data }}</td>
 					<td>{{ dispesa.conta }}</td>
+					<td>{{ dispesa.categorias }}</td>
 					
 					
 					
-					<td class="text-center">
+					<!--<td class="text-center">
 				          {% bootstrap_button content='' href=dispesa.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
-				    </td>
+				    </td>-->
 					<td class="text-center">
 						{% bootstrap_button content='' href=dispesa.get_delete_url button_type='link' icon='trash' button_class='btn btn-danger' size='sm' %}
 				  </td>

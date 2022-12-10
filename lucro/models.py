@@ -18,7 +18,7 @@ class Lucro(models.Model):
    
 
     def __str__(self):
-        return str()
+        return str(self.ganhos)
 
     def __unicode__(self):
         

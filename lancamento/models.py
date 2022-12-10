@@ -16,7 +16,7 @@ class Lancamento(models.Model):
    
 
     def __str__(self):
-        return str()
+        return str(self.dispesa)
 
     def __unicode__(self):
         
