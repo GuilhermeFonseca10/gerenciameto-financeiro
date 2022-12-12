@@ -9,7 +9,7 @@ class LucroForm(forms.ModelForm):
         model = Lucro
        
 
-        fields = '__all__'
+        fields = ['ganhos', 'valor', 'data', 'categorias', 'conta']
 
     def __init__(self, *args, **kwargs):
         super(LucroForm, self).__init__(*args, **kwargs)

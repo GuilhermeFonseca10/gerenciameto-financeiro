@@ -1,7 +1,7 @@
 from django.db import models
 
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from categoria.models import Categoria
 from usuario.models import Usuario
 from conta.models import Conta
@@ -12,8 +12,8 @@ class Lucro(models.Model):
     data = models.DateField()
     
     categorias = models.ManyToManyField(Categoria)
-    usuario = models.ForeignKey(Usuario, on_delete=models.PROTECT, null=True, blank=True)
-    conta = models.ForeignKey(Conta, on_delete=models.PROTECT, null=True, blank=True)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True, blank=True)
+    conta = models.ForeignKey(Conta, on_delete=models.CASCADE, null=True, blank=True)
     
    
 

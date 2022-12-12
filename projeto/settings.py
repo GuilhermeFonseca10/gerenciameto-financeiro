@@ -27,8 +27,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#
 AUTH_USER_MODEL = 'usuario.Usuario'
 
+AUTHENTICATION_BACKENDS = [
+    'authentication.LoginUsernameEmail',
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,6 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap3',
+    
+   
+
 
     #apps
     'core',

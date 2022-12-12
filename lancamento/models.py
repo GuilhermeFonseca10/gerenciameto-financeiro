@@ -1,6 +1,6 @@
 from django.db import models
 from categoria.models import Categoria
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from usuario.models import Usuario
 from conta.models import Conta
 # Create your models here.
@@ -10,7 +10,7 @@ class Lancamento(models.Model):
     data = models.DateField()
     
     categorias = models.ManyToManyField(Categoria)
-    usuario = models.ForeignKey(Usuario, on_delete=models.PROTECT, null=True, blank=True)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True, blank=True)
     conta = models.ForeignKey(Conta, on_delete=models.CASCADE, null=True, blank=True)
     
    

@@ -16,7 +16,7 @@ Contas
   		<thead>
   			<th>Contas</th>
   			<th>Saldo</th>
-  			<th class="text-center">Editar</th>
+  			
 			<th class="text-center">Excluir</th>
   		</thead>
   		<tbody>
@@ -24,9 +24,7 @@ Contas
 				<tr>
 					<td>{{ conta.descricao }}</td>
 					<td>R$ {{ conta.saldo|floatformat:2}}</td>
-					<td class="text-center">
-				          {% bootstrap_button content='' href=conta.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
-				    </td>
+					
 					  <td class="text-center">
 				          {% bootstrap_button content='' href=conta.get_delete_url button_type='link' icon='trash' button_class='btn btn-danger' size='sm' %}
 				    </td>

@@ -7,8 +7,7 @@ class ContaForm(forms.ModelForm):
     class Meta:
         model = Conta
 
-        fields = '__all__'
-
+        fields = ['descricao', 'saldo', 'usuario']
     def __init__(self, *args, **kwargs):
         super(ContaForm, self).__init__(*args, **kwargs)
         self.initial["usuario"] = get_current_user().id

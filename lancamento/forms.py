@@ -9,7 +9,7 @@ class LancamentoForm(forms.ModelForm):
         model = Lancamento
        
 
-        fields = '__all__'
+        fields = ['dispesa', 'valor', 'data', 'categorias', 'conta']
 
     def __init__(self, *args, **kwargs):
         super(LancamentoForm, self).__init__(*args, **kwargs)

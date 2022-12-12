@@ -1,6 +1,6 @@
 #coding: utf-8
 from django.db import models
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from usuario.models import Usuario
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -8,7 +8,7 @@ from django.dispatch import receiver
 class Conta(models.Model):
     descricao = models.CharField(u'Descrição', max_length=40)
     saldo = models.DecimalField(u'Saldo', max_digits=10, decimal_places=2, default=0)
-    usuario = models.ForeignKey(Usuario, on_delete=models.PROTECT, null=True, blank=True)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return str(self.descricao)

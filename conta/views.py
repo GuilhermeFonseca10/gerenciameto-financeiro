@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponse
 from utils.decorators import LoginRequiredMixin
 from conta.forms import ContaForm
+from django.db.models import Sum
 
 from .models import Conta
 from lancamento.views import Lancamento
@@ -17,6 +18,8 @@ class ContaListView(LoginRequiredMixin, ListView):
 		
 		return Conta.objects.filter(usuario=usuario)
 		#return Conta.objects.all()
+
+	
 
 class ContaCreateView(LoginRequiredMixin, CreateView):
 	model = Conta
@@ -38,7 +41,7 @@ class ContaCreateView(LoginRequiredMixin, CreateView):
 
 class ContaUpdateView(LoginRequiredMixin, UpdateView):
 	model = Conta
-	fields = ['descricao', 'usuario']
+	fields = ['descricao']
 	success_url = 'conta_list'
 
 class ContaDeleteView(LoginRequiredMixin, DeleteView):

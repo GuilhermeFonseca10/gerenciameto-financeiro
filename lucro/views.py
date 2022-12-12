@@ -10,6 +10,7 @@ from lucro.forms import LucroForm
 from conta.views import Conta
 from lucro.models import Lucro
 from lancamento.models import Lancamento
+from django.db.models import Sum
 
 
 class LucroListView(LoginRequiredMixin, ListView):
@@ -19,6 +20,15 @@ class LucroListView(LoginRequiredMixin, ListView):
 		usuario = self.request.user
 		
 		return Lucro.objects.filter(usuario=usuario)
+
+	def get_context_data(self, **kwargs):
+		
+		context = super().get_context_data(**kwargs)
+		context['total'] = Lucro.objects.aggregate(
+			valor_total = Sum('valor')
+		)['valor_total']or 0
+		return context 
+		
 	
 class LucroCreateView(LoginRequiredMixin, CreateView):
 	model = Lucro

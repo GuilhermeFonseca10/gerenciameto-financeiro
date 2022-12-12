@@ -1,6 +1,6 @@
 # coding: utf-8
 from django.db import models
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 
 class Categoria(models.Model):
@@ -8,7 +8,7 @@ class Categoria(models.Model):
  
 
     descricao = models.CharField(u'descrição', max_length=40, unique=True)
-    is_active = models.BooleanField(u'ativa', default=True)
+   
     
 
     def __str__(self):
