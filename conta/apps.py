@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class ContaConfig(AppConfig):
-    name = 'conta'
+    name = "conta"

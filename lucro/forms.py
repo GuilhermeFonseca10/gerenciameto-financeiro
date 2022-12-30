@@ -1,15 +1,14 @@
-from django import forms
 from crum import get_current_user
-from .models import Lucro
-from .models import Conta
+from django import forms
+
+from .models import Conta, Lucro
 
 
 class LucroForm(forms.ModelForm):
     class Meta:
         model = Lucro
-       
 
-        fields = ['ganhos', 'valor', 'data', 'categorias', 'conta']
+        fields = ["ganhos", "valor", "data", "categorias", "conta"]
 
     def __init__(self, *args, **kwargs):
         super(LucroForm, self).__init__(*args, **kwargs)
@@ -17,3 +16,5 @@ class LucroForm(forms.ModelForm):
         self.initial["usuario"] = user.id
         contas = Conta.objects.filter(usuario=user)
         self.fields["conta"].queryset = contas
+
+    

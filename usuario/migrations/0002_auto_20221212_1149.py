@@ -6,17 +6,21 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('usuario', '0001_initial'),
+        ("usuario", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='usuario',
-            options={'ordering': ['username'], 'verbose_name': 'usuário', 'verbose_name_plural': 'usuários'},
+            name="usuario",
+            options={
+                "ordering": ["username"],
+                "verbose_name": "usuário",
+                "verbose_name_plural": "usuários",
+            },
         ),
         migrations.RenameField(
-            model_name='usuario',
-            old_name='nome',
-            new_name='username',
+            model_name="usuario",
+            old_name="nome",
+            new_name="username",
         ),
     ]

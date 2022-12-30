@@ -1,0 +1,7 @@
+{
+    "python.testing.pytestArgs": [
+        "lucro"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}

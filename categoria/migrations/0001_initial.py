@@ -7,18 +7,30 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Categoria',
+            name="Categoria",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('descricao', models.CharField(max_length=40, unique=True, verbose_name='descrição')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "descricao",
+                    models.CharField(
+                        max_length=40, unique=True, verbose_name="descrição"
+                    ),
+                ),
             ],
             options={
-                'ordering': ['descricao'],
+                "ordering": ["descricao"],
             },
         ),
     ]

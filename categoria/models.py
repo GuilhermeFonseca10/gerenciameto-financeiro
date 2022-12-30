@@ -5,17 +5,13 @@ from django.urls import reverse
 
 class Categoria(models.Model):
 
- 
-
-    descricao = models.CharField(u'descrição', max_length=40, unique=True)
-   
-    
+    descricao = models.CharField("descrição", max_length=40, unique=True)
 
     def __str__(self):
         return str(self.descricao)
 
     class Meta:
-        ordering = ['descricao']
+        ordering = ["descricao"]
 
     def __unicode__(self):
         self.descricao
@@ -26,8 +22,8 @@ class Categoria(models.Model):
 
     @property
     def get_absolute_url(self):
-        return reverse('categoria_update', args=[str(self.id)])
+        return reverse("categoria_update", args=[str(self.id)])
 
     @property
     def get_delete_url(self):
-        return reverse('categoria_delete', args=[str(self.id)])
+        return reverse("categoria_delete", args=[str(self.id)])
