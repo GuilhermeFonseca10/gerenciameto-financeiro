@@ -1,13 +1,81 @@
 {% extends 'core/base.html' %}
 {% load bootstrap3 %}
 
-{% block title %}Início{% endblock %}
+{% block title %}💸MoneyFlow - Seu sistema de gerenciamento financeiro{% endblock %}
 
 {% block content %}
+    <div class="text-center mb-5">
+        <h2 class="mb-3 text-primary">Bem-vindo ao 💸MoneyFlow</h2>
+        <h5 class="text-muted">Seu sistema de gerenciamento financeiro</h5>
+        <p class="text-muted">Simplifique suas finanças, acompanhe suas receitas e despesas, e tome decisões mais inteligentes.</p>
+    </div>
 
+    <!-- Título com mais espaçamento em relação aos cards -->
+    <h4 class="mb-5 mt-5 text-primary text-center">💸Controle Seu Dinheiro: Aqui Vão Algumas Dicas para Economizar!</h4>
+    
+    <div class="row">
+        {% for notificacao in notificacoes %}
+            <div class="col-xs-12 col-sm-4 col-md-4 mb-4">
+                <div class="panel panel-default custom-panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ notificacao.nome }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>{{ notificacao.descricao }}</p>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-muted text-center">Nenhuma notificação disponível.</p>
+        {% endfor %}
+    </div>
 
+    <style>
+        .custom-panel {
+            border-radius: 10px; /* Bordas arredondadas */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombras para dar efeito de profundidade */
+            overflow: hidden; /* Garante que o conteúdo dentro do painel não saia dos limites */
+            height: 300px; /* Altura fixa para todos os cards */
+            display: flex;
+            flex-direction: column;
+        }
 
- 
-{% bootstrap_icon "time" %}
-{% bootstrap_alert "Parabéns" alert_type='success' %}
+        .custom-panel .panel-heading {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .custom-panel .panel-body {
+            padding: 15px;
+            flex-grow: 1; /* Faz o corpo do painel preencher o espaço restante */
+            text-align: center;
+            font-size: 1.3rem;
+            color: #555;
+        }
+
+        .custom-panel .panel-body p {
+            margin-bottom: 0;
+        }
+
+        /* Estilo do painel para dispositivos menores */
+        @media (max-width: 768px) {
+            .custom-panel {
+                height: auto; /* Remove a altura fixa em telas pequenas */
+            }
+        }
+
+        /* Aumentando o espaçamento inferior do título */
+        h4.mb-5 {
+            margin-bottom: 10px !important; /* Aumentando o espaçamento inferior */
+            margin-top: 30px !important;
+        }
+
+        /* Adicionando espaçamento superior para a seção de cards */
+        .row {
+            margin-top: 30px; /* Mais margem superior entre o título e os cards */
+        }
+    </style>
 {% endblock %}
