@@ -7,7 +7,7 @@ from conta.models import Conta
 from conta.forms import ContaForm
 from lancamento.views import Lancamento
 from utils.decorators import LoginRequiredMixin
-
+from django.urls import reverse_lazy
 
 class ContaListView(LoginRequiredMixin, ListView):
     model = Conta
@@ -29,7 +29,7 @@ class ContaCreateView(LoginRequiredMixin, CreateView):
 
     form_class = ContaForm
 
-    success_url = "conta_list"
+    success_url = reverse_lazy("conta_list")
 
     # def form_valid(self, form):
     # obj = form.save()
@@ -42,9 +42,9 @@ class ContaCreateView(LoginRequiredMixin, CreateView):
 class ContaUpdateView(LoginRequiredMixin, UpdateView):
     model = Conta
     fields = ["descricao"]
-    success_url = "conta_list"
+    success_url = reverse_lazy("conta_list")
 
 
 class ContaDeleteView(LoginRequiredMixin, DeleteView):
     model = Conta
-    success_url = "conta_list"
+    success_url = reverse_lazy("conta_list")

@@ -14,9 +14,7 @@ class Lucro(models.Model):
 
     categorias = models.ManyToManyField(Categoria)
     
-    usuario = models.ForeignKey(
-        Usuario, on_delete=models.CASCADE, null=True, blank=True
-    )
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     conta = models.ForeignKey(Conta, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):

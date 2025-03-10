@@ -3,7 +3,7 @@ from django.db.models import Sum
 from django.shortcuts import render
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-
+from django.urls import reverse_lazy
 from conta.views import Conta
 from lancamento.models import Lancamento
 from lucro.forms import LucroForm
@@ -16,7 +16,7 @@ class LucroListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         usuario = self.request.user
-
+        print("Usuário autenticado:", usuario)
         return Lucro.objects.filter(usuario=usuario)
 
     def get_context_data(self, **kwargs):
@@ -27,28 +27,29 @@ class LucroListView(LoginRequiredMixin, ListView):
             Lucro.objects.aggregate(valor_total=Sum("valor"))["valor_total"] or 0
            
         )
+        print("Object List:", context["object_list"])
         return context
 
 
 class LucroCreateView(LoginRequiredMixin, CreateView):
     model = Lucro
-
     form_class = LucroForm
-
-    # fields = ['dispesa', 'valor', 'categorias', 'data', 'conta']
-
-    success_url = "lucro_list"
+    success_url = reverse_lazy("lucro_list")
+    
+    def form_valid(self, form):
+        form.instance.usuario = self.request.user
+        return super().form_valid(form)
 
 
 class LucroUpdateView(LoginRequiredMixin, UpdateView):
     model = Lucro
     fields = ["ganhos", "valor", "data"]
-    success_url = "lucro_list"
+    success_url = reverse_lazy("lucro_list")
 
 
 class LucroDeleteView(LoginRequiredMixin, DeleteView):
     model = Lucro
-    success_url = "lucro_list"
+    success_url = reverse_lazy("lucro_list")
 
 
 # Create your views here.

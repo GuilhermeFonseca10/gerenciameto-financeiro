@@ -1,67 +1,55 @@
-# coding: utf-8
-from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
-                                        UserManager)
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
 
+class UsuarioManager(BaseUserManager):
+    def create_user(self, username, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('The Email field must be set')
+        email = self.normalize_email(email)
+        user = self.model(username=username, email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
-class Usuario(AbstractBaseUser):
-    # 1 campo da tupla fica no banco de dados
-    # 2 campo da tupla eh mostrado para o usuario
+    def create_superuser(self, username, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
+        return self.create_user(username, email, password, **extra_fields)
+
+class Usuario(AbstractBaseUser, PermissionsMixin):
     TIPOS = (("ADMINISTRADOR", "Administrador"), ("COMUM", "Comum"))
 
-    USERNAME_FIELD = "username"
+    username = models.CharField("usuario", max_length=70)
+    email = models.EmailField("email", unique=True, max_length=70, db_index=True)
+    is_active = models.BooleanField("ativo", default=True, help_text="Se ativo o usuário tem permissão para acessar o sistema")
+    is_staff = models.BooleanField("staff status", default=False, help_text="Se True, o usuário pode acessar o admin.")
+    tipo = models.CharField("tipo do usuário", max_length=15, choices=TIPOS, default="COMUM")
 
-    username = models.CharField(_("usuario"), max_length=70)
-    email = models.EmailField(_("email"), unique=True, max_length=70, db_index=True)
-    is_active = models.BooleanField(
-        _("ativo"),
-        default=False,
-        help_text="Se ativo o usuário tem permissão para acessar o sistema",
-    )
-    tipo = models.CharField(
-        _("tipo do usuário"), max_length=15, choices=TIPOS, default="COMUM"
-    )
+    objects = UsuarioManager()
 
-    objects = UserManager()
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
 
     class Meta:
         ordering = ["username"]
-        verbose_name = _("usuário")
-        verbose_name_plural = _("usuários")
+        verbose_name = "usuário"
+        verbose_name_plural = "usuários"
 
-    def __unicode__(self):
+    def __str__(self):
         return self.username
 
-    def has_module_perms(self, app_label):
-        return True
-
-    def has_perm(self, perm, obj=None):
-        return True
-
     def get_short_name(self):
-        return self.username[0:10].strip()
+        return self.username[:10].strip()
 
     def get_full_name(self):
         return self.username
 
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.set_password(self.password)
-        super(Usuario, self).save(*args, **kwargs)
-
-    @property
-    def is_staff(self):
-        if self.tipo == "ADMINISTRADOR":
-            return True
-        return False
-
-    @property
     def get_absolute_url(self):
         return reverse("usuario_update", args=[str(self.id)])
-
-
-# @property
-# def get_delete_url(self):
-# return reverse('usuario_delete', args=[str(self.id)])

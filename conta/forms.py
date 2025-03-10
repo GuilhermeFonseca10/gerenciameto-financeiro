@@ -12,5 +12,10 @@ class ContaForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ContaForm, self).__init__(*args, **kwargs)
-        self.initial["usuario"] = get_current_user().id
-        # self.fields["usuario"].widget.attrs["disabled"] = True
+        current_user = get_current_user()
+        if current_user:
+            self.initial["usuario"] = current_user.id
+        else:
+            # Se o usuário não estiver autenticado, você pode optar por lançar uma exceção,
+            # ou lidar com o caso de outra forma (por exemplo, redirecionando o usuário)
+            raise ValueError("Usuário não autenticado.")

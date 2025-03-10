@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-
+from django.urls import reverse_lazy
 from conta.views import Conta
 from lancamento.forms import LancamentoForm
 from lancamento.models import Lancamento
@@ -24,18 +24,22 @@ class LancamentoCreateView(LoginRequiredMixin, CreateView):
 
     # fields = ['dispesa', 'valor', 'categorias', 'data', 'conta']
 
-    success_url = "lancamento_list"
+    success_url = reverse_lazy ("lancamento_list")
+    
+    def form_valid(self, form):
+        form.instance.usuario = self.request.user
+        return super().form_valid(form)
 
 
 class LancamentoUpdateView(LoginRequiredMixin, UpdateView):
     model = Lancamento
     fields = ["dispesa", "categorias", "data"]
-    success_url = "lancamento_list"
+    success_url = reverse_lazy ("lancamento_list")
 
 
 class LancamentoDeleteView(LoginRequiredMixin, DeleteView):
     model = Lancamento
-    success_url = "lancamento_list"
+    success_url = reverse_lazy ("lancamento_list")
 
 
 # Create your views here.

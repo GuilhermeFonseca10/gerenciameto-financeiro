@@ -9,3 +9,4 @@ from utils.decorators import LoginRequiredMixin
 class HomeView(LoginRequiredMixin, TemplateView):
 
     template_name = "core/home.html"
+    

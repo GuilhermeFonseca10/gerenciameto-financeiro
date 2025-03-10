@@ -9,7 +9,10 @@
 <h1>{% bootstrap_icon 'user' %} Usuário</h1>
 	<div class="panel panel-default">
 	  <div class="panel-body">
-	    <p class="btn btn-md btn-primary">Você pode editar seus dados pessoais logo abaixo!</p>
+	    
+		<a href="{% url 'usuario_create' %}" class="btn btn-success">
+			{% bootstrap_icon 'plus' %} Adicionar Novo Usuário
+		  </a>
 	  </div>
 	</div>
 	<table class="table table-hover">

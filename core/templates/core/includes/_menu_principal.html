@@ -43,7 +43,10 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#">Alterar senha</a></li>
-            <li><a href="{% url 'logout' %}?next=/">Sair</a></li>
+            <li><form method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-link">Sair</button>
+            </form></li>
        
             
           
