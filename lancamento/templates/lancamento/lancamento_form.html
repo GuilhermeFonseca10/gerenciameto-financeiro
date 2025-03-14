@@ -14,7 +14,7 @@ Cadastro de Despesas
   {% csrf_token %}
   {{ form.non_field_errors }}
   {% bootstrap_form form %}
-  <p>Verifique se todos os dados estão corretos, você não poderá mais editar.</p>
+
   {% buttons submit='Confirmar' %}
 
     <a href="javascript:history.go(-1);" class="btn btn-info" role="button">Voltar</a>

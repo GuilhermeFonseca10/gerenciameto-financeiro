@@ -1,3 +1,4 @@
+from django.db.models import Sum
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy
@@ -5,7 +6,7 @@ from lancamento.forms import LancamentoForm
 from lancamento.models import Lancamento
 from utils.decorators import LoginRequiredMixin
 from django.contrib import messages
-
+from .models import Conta
 class LancamentoListView(LoginRequiredMixin, ListView):
     model = Lancamento
 
@@ -13,6 +14,13 @@ class LancamentoListView(LoginRequiredMixin, ListView):
         usuario = self.request.user
 
         return Lancamento.objects.filter(usuario=usuario)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        usuario = self.request.user
+        # Calcular o total de despesas do usuário
+        total_gastos = Lancamento.objects.filter(usuario=usuario).aggregate(total=Sum('valor'))['total'] or 0
+        context['total_gastos'] = total_gastos
+        return context
 
 
 class LancamentoCreateView(LoginRequiredMixin, CreateView):
@@ -23,6 +31,12 @@ class LancamentoCreateView(LoginRequiredMixin, CreateView):
     # fields = ['dispesa', 'valor', 'categorias', 'data', 'conta']
 
     success_url = reverse_lazy ("lancamento_list")
+    
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        # Filtra as contas para o usuário logado
+        form.fields["conta"].queryset = Conta.objects.filter(usuario=self.request.user)
+        return form
     
     def form_valid(self, form):
         form.instance.usuario = self.request.user
@@ -51,6 +65,12 @@ class LancamentoUpdateView(LoginRequiredMixin, UpdateView):
     fields = ["dispesa", "valor", "categorias", "data", "conta"]
     template_name = "lancamento/lancamento_update.html"
     success_url = reverse_lazy ("lancamento_list")
+    
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        # Filtra as contas para o usuário logado
+        form.fields["conta"].queryset = Conta.objects.filter(usuario=self.request.user)
+        return form
 
     def form_valid(self, form):
         lancamento = self.get_object()  # Obtém o lançamento antes da atualização

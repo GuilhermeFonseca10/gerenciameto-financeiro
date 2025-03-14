@@ -8,7 +8,7 @@ from usuario.models import Usuario
 
 # Create your models here.
 class Lancamento(models.Model):
-    dispesa = models.CharField(max_length=100)
+    dispesa = models.CharField(max_length=100, verbose_name="Despesa")
     valor = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     data = models.DateField()
 

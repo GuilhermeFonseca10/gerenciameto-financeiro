@@ -12,9 +12,4 @@ class LancamentoForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(LancamentoForm, self).__init__(*args, **kwargs)
-        user = get_current_user()
-        self.initial["usuario"] = user.id
-        contas = Conta.objects.filter(usuario=user)
-        self.fields["conta"].queryset = contas
-    
-        self.fields["data"].widget = DateInput(attrs={'type': 'date'})
+        self.fields["data"].widget = forms.DateInput(attrs={'type': 'date'})

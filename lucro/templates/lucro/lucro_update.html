@@ -5,22 +5,18 @@
 {% endblock %}
 
 {% block title %}
-	
-	Cadastro de Conta Bancária
+Editar de Lucro
 {% endblock %}
 
 {% block content %}
-<h1>{% bootstrap_icon 'folder-open' %} Cadastro de Conta Bancária</h1>
+<h1>{% bootstrap_icon 'folder-open' %} Editar Lucro</h1>
 <form class="form" role="form" method="POST">
   {% csrf_token %}
   {{ form.non_field_errors }}
-  {% bootstrap_field form.nome %}
-  {% bootstrap_field form.saldo %}
- 
-  <div style="pointer-events: none;">
-  {% bootstrap_field form.usuario %}
-</div>
-  {% buttons submit='Salvar' %}
+  {% bootstrap_form form %}
+
+  {% buttons submit='Confirmar' %}
+
     <a href="javascript:history.go(-1);" class="btn btn-info" role="button">Voltar</a>
   {% endbuttons %}
 </form>

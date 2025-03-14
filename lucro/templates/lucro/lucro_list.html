@@ -2,42 +2,51 @@
 {% load bootstrap3 %}
 
 {% block title %}
- Lucro
+ Lucros
 {% endblock %}
 
 {% block content %}
 <h1>{% bootstrap_icon 'glyphicon glyphicon-piggy-bank' %} Lucros</h1>
 	<div class="panel panel-default">
 	  <div class="panel-body">
-	    <a href="{% url 'lucro_create' %}" class="btn btn-md btn-primary">{% bootstrap_icon 'floppy-disk' %} Cadastrar lucros</a>
-		<p class="btn btn-md btn-primary"> Valor total dos lucros até o momento é de: {{total}} R$</p>
+	    <div class="row">
+			<div class="col-sm-6 ">
+				<a href="{% url 'lucro_create' %}" class="btn btn-md btn-primary">{% bootstrap_icon 'floppy-disk' %} Cadastrar Lucros</a>
+			  </div>
+	      <div class="col-sm-6 text-right">
+	        <span class="badge" style="background-color: #0275d8; color: white;">
+	          <strong>Total de Lucros:</strong> R$ {{ total|floatformat:2 }}
+	        </span>
+	      </div>
+	      
+	    </div>
+	  </div>
 	</div>
-	</div>
+
 	<p><b>Obs:</b> Mesmo que o lucro seja excluído, o valor ainda permanecerá no total de quanto você lucrou.</p>
+
 	<table class="table table-hover">
   		<thead>
-			
   			<th>Ganhos</th>
   			<th>Valor</th>
-			  <th>Data</th>
-			  <th>Conta</th>
-			
-  			
+			<th>Data</th>
+			<th>Conta</th>
+			<th class="text-center">Editar</th>
   			<th class="text-center">Excluir</th>
   		</thead>
   		<tbody>
-			
   			{% for ganho in object_list %}
 				<tr>
 					<td>{{ ganho.ganhos }}</td>
 					<td>{{ ganho.valor }}</td>
 					<td>{{ ganho.data }}</td>
 					<td>{{ ganho.conta }}</td>
-					
-									
 					<td class="text-center">
-						{% bootstrap_button content='' href=dispesa.get_delete_url button_type='link' icon='trash' button_class='btn btn-danger' size='sm' %}
-				  </td>
+						{% bootstrap_button content='' href=ganho.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
+					</td>
+					<td class="text-center">
+						{% bootstrap_button content='' href=ganho.get_delete_url button_type='link' icon='trash' button_class='btn btn-danger' size='sm' %}
+					</td>
 				</tr>
 			{% endfor %}
   		</tbody>

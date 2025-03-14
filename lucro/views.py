@@ -22,9 +22,9 @@ class LucroListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         
         context = super().get_context_data(**kwargs)
-        
+        usuario = self.request.user
         context["total"] = (
-            Lucro.objects.aggregate(valor_total=Sum("valor"))["valor_total"] or 0
+            Lucro.objects.filter(usuario=usuario).aggregate(valor_total=Sum("valor"))["valor_total"] or 0
            
         )
         print("Object List:", context["object_list"])
@@ -38,13 +38,39 @@ class LucroCreateView(LoginRequiredMixin, CreateView):
     
     def form_valid(self, form):
         form.instance.usuario = self.request.user
+        conta = form.instance.conta  # A conta associada ao lucro
+        valor_lucro = form.cleaned_data['valor']  # O valor do lucro
+
+        conta.saldo += valor_lucro
+        conta.save()
+
         return super().form_valid(form)
 
 
 class LucroUpdateView(LoginRequiredMixin, UpdateView):
     model = Lucro
-    fields = ["ganhos", "valor", "data"]
+    fields = ["ganhos", "valor", "data", "categorias", "conta"]
+    template_name = "lucro/lucro_update.html"
     success_url = reverse_lazy("lucro_list")
+    
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        # Filtra as contas para o usuário logado
+        form.fields["conta"].queryset = Conta.objects.filter(usuario=self.request.user)
+        return form
+
+    def form_valid(self, form):
+        lucro = self.get_object()  # Obtém o lucro antes da atualização
+        conta = lucro.conta  
+
+        valor_antigo = lucro.valor
+        valor_novo = form.cleaned_data["valor"]
+        diferenca = valor_novo - valor_antigo  # Calcula a diferença de valores
+
+        conta.saldo += diferenca  # Ajusta o saldo da conta com a diferença
+        conta.save()  # Atualiza o saldo da conta
+
+        return super().form_valid(form)
 
 
 class LucroDeleteView(LoginRequiredMixin, DeleteView):

@@ -16,7 +16,7 @@
   		<thead>
   			<th>Descriçao</th>
   			
-  			<th>Situação</th>
+  			{% comment %} <th>Situação</th> {% endcomment %}
   			<th class="text-center">Editar</th>
 			<th class="text-center">Excluir</th>
   		</thead>
@@ -25,7 +25,7 @@
 				<tr>
 					<td>{{ categoria.descricao }}</td>
 					
-					<td>
+					{% comment %} <td>
 						{% if categoria.is_active %}
 							Ativa 
 							{% bootstrap_icon 'thumbs-up'%}
@@ -33,7 +33,7 @@
 							Inativa 
 							{% bootstrap_icon 'thumbs-down' %}
 						{% endif %}
-					</td>
+					</td> {% endcomment %}
 					
 					<td class="text-center">
 				          {% bootstrap_button content='' href=categoria.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}

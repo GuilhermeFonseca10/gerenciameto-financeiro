@@ -6,11 +6,21 @@
 {% endblock %}
 
 {% block content %}
-<h1>{% bootstrap_icon 'glyphicon glyphicon-usd' %}Despesas</h1>
+<h1>{% bootstrap_icon 'glyphicon glyphicon-usd' %} Despesas</h1>
 	<div class="panel panel-default">
 	  <div class="panel-body">
-	    <a href="{% url 'lancamento_create' %}" class="btn btn-md btn-primary">{% bootstrap_icon 'floppy-disk' %} Cadastrar despesas</a>
-	  </div>
+	    <div class="row">
+	      
+	      <div class="col-sm-6 ">
+	        <a href="{% url 'lancamento_create' %}" class="btn btn-md btn-primary">{% bootstrap_icon 'floppy-disk' %} Cadastrar despesas</a>
+	      </div>
+		  <div class="col-sm-6 text-right" >
+	        <span class="badge" style="background-color: #d9534f; color: white;">
+	          <strong>Total de Despesas:</strong> R$ {{ total_gastos|floatformat:2 }}
+	        </span>
+	      </div>
+	    </div>
+	</div>
 	</div>
 	<table class="table table-hover">
   		<thead>
@@ -18,29 +28,22 @@
   			<th>Valor</th>
 			  <th>Data</th>
 			  <th>Conta</th>
-			
-  			
   			<th class="text-center">Editar</th>
 			<th class="text-center">Excluir</th>
   		</thead>
   		<tbody>
-			
   			{% for dispesa in object_list %}
 				<tr>
 					<td>{{ dispesa.dispesa }}</td>
 					<td>{{ dispesa.valor }}</td>
 					<td>{{ dispesa.data }}</td>
 					<td>{{ dispesa.conta }}</td>
-					
-					
-					
-					
 					<td class="text-center">
-				          {% bootstrap_button content='' href=dispesa.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
-				    </td>
+						{% bootstrap_button content='' href=dispesa.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
+					</td>
 					<td class="text-center">
 						{% bootstrap_button content='' href=dispesa.get_delete_url button_type='link' icon='trash' button_class='btn btn-danger' size='sm' %}
-				  </td>
+					</td>
 				</tr>
 			{% endfor %}
   		</tbody>
