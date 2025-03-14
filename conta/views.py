@@ -1,11 +1,8 @@
 # coding: utf-8
-from django.db.models import Sum
-from django.http import HttpResponse
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from conta.models import Conta
 from conta.forms import ContaForm
-from lancamento.views import Lancamento
 from utils.decorators import LoginRequiredMixin
 from django.urls import reverse_lazy
 
@@ -41,7 +38,7 @@ class ContaCreateView(LoginRequiredMixin, CreateView):
 
 class ContaUpdateView(LoginRequiredMixin, UpdateView):
     model = Conta
-    fields = ["descricao"]
+    fields = ["nome"]
     success_url = reverse_lazy("conta_list")
 
 

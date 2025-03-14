@@ -2,26 +2,25 @@
 {% load bootstrap3 %}
 
 {% block title %}
- Dispesas
+ Despesas
 {% endblock %}
 
 {% block content %}
-<h1>{% bootstrap_icon 'glyphicon glyphicon-usd' %}Dispesas</h1>
+<h1>{% bootstrap_icon 'glyphicon glyphicon-usd' %}Despesas</h1>
 	<div class="panel panel-default">
 	  <div class="panel-body">
-	    <a href="{% url 'lancamento_create' %}" class="btn btn-md btn-primary">{% bootstrap_icon 'floppy-disk' %} Cadastrar dispesas</a>
+	    <a href="{% url 'lancamento_create' %}" class="btn btn-md btn-primary">{% bootstrap_icon 'floppy-disk' %} Cadastrar despesas</a>
 	  </div>
 	</div>
-	<p><b>Obs:</b> Mesmo que a despesa seja excluída, o valor ainda permanecerá no total de quanto você gastou.</p>
 	<table class="table table-hover">
   		<thead>
-  			<th>Dispesa</th>
+  			<th>Despesa</th>
   			<th>Valor</th>
 			  <th>Data</th>
 			  <th>Conta</th>
 			
   			
-  			<!--<th class="text-center">Editar</th>-->
+  			<th class="text-center">Editar</th>
 			<th class="text-center">Excluir</th>
   		</thead>
   		<tbody>
@@ -36,9 +35,9 @@
 					
 					
 					
-					<!--<td class="text-center">
+					<td class="text-center">
 				          {% bootstrap_button content='' href=dispesa.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
-				    </td>-->
+				    </td>
 					<td class="text-center">
 						{% bootstrap_button content='' href=dispesa.get_delete_url button_type='link' icon='trash' button_class='btn btn-danger' size='sm' %}
 				  </td>

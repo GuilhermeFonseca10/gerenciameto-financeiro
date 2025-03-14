@@ -1,27 +1,25 @@
 # coding: utf-8
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.urls import reverse
 
 from usuario.models import Usuario
 
 
 class Conta(models.Model):
-    descricao = models.CharField("Descrição", max_length=40)
+    nome = models.CharField("Nome da conta", max_length=40)
     saldo = models.DecimalField("Saldo", max_digits=10, decimal_places=2, default=0)
     usuario = models.ForeignKey(
         Usuario, on_delete=models.CASCADE, null=True, blank=True
     )
 
     def __str__(self):
-        return str(self.descricao)
+        return str(self.nome)
 
     def __unicode__(self):
-        return "%s: R$ %d" % (self.descricao, self.saldo)
+        return "%s: R$ %d" % (self.nome, self.saldo)
 
     class Meta:
-        ordering = ["-saldo", "descricao"]
+        ordering = ["-saldo", "nome"]
 
     @property
     def get_absolute_url(self):
@@ -32,19 +30,4 @@ class Conta(models.Model):
         return reverse("conta_delete", args=[str(self.id)])
 
 
-from lancamento.models import Lancamento
 
-
-@receiver(post_save, sender=Lancamento)
-def update_saldo(sender, instance, **kwargs):
-    instance.conta.saldo -= instance.valor
-    instance.conta.save()
-
-
-from lucro.models import Lucro
-
-
-@receiver(post_save, sender=Lucro)
-def update_saldo_lucro(sender, instance, **kwargs):
-    instance.conta.saldo += instance.valor
-    instance.conta.save()

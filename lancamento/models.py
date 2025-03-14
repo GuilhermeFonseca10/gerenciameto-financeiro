@@ -40,3 +40,4 @@ class Lancamento(models.Model):
     @property
     def get_delete_url(self):
         return reverse("lancamento_delete", args=[str(self.id)])
+    

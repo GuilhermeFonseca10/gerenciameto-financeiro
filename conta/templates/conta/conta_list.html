@@ -2,11 +2,11 @@
 {% load bootstrap3 %}
 	
 {% block title %}
-Contas
+Saldo em Contas
 {% endblock %}
 
 {% block content %}
-<h1>{% bootstrap_icon 'folder-open' %} Contas</h1>
+<h1>{% bootstrap_icon 'folder-open' %} Saldo em Contas</h1>
 	<div class="panel panel-default">
 	  <div class="panel-body">
 	    <a href="{% url 'conta_create' %}" class="btn btn-md btn-primary">{% bootstrap_icon 'floppy-disk' %} Cadastrar conta</a>
@@ -14,7 +14,7 @@ Contas
 	</div>
 	<table class="table table-hover">
   		<thead>
-  			<th>Contas</th>
+  			<th>Contas Bancárias</th>
   			<th>Saldo</th>
   			
 			<th class="text-center">Excluir</th>
@@ -22,8 +22,12 @@ Contas
   		<tbody>
   			{% for conta in object_list %}
 				<tr>
-					<td>{{ conta.descricao }}</td>
-					<td>R$ {{ conta.saldo|floatformat:2}}</td>
+					<td>{{ conta.nome }}</td>
+					<td> R$ {{ conta.saldo|floatformat:2}} 
+						{% if conta.saldo < 0 %}
+							<span class="label label-danger" style="margin-left: 10px;">Saldo negativo!</span>
+						{% endif %}
+					</td>
 					
 					  <td class="text-center">
 				          {% bootstrap_button content='' href=conta.get_delete_url button_type='link' icon='trash' button_class='btn btn-danger' size='sm' %}

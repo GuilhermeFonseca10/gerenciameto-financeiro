@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block title %}
-Cadastro de lucros
+Cadastro de Despesas
 {% endblock %}
 
 {% block content %}
-<h1>{% bootstrap_icon 'glyphicon glyphicon-usd' %}Cadastro de lucros</h1>
+<h1>{% bootstrap_icon 'glyphicon glyphicon-usd' %}Cadastro de Despesas</h1>
 <form class="form" role="form" method="POST">
   {% csrf_token %}
   {{ form.non_field_errors }}
