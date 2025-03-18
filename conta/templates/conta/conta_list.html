@@ -16,7 +16,7 @@ Saldo em Contas
   		<thead>
   			<th>Contas Bancárias</th>
   			<th>Saldo</th>
-  			
+  			<th class="text-center">Editar</th>
 			<th class="text-center">Excluir</th>
   		</thead>
   		<tbody>
@@ -28,7 +28,9 @@ Saldo em Contas
 							<span class="label label-danger" style="margin-left: 10px;">Saldo negativo!</span>
 						{% endif %}
 					</td>
-					
+						<td class="text-center">
+							{% bootstrap_button content='' href=conta.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
+						</td>
 					  <td class="text-center">
 				          {% bootstrap_button content='' href=conta.get_delete_url button_type='link' icon='trash' button_class='btn btn-danger' size='sm' %}
 				    </td>

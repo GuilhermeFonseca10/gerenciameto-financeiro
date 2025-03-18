@@ -1,5 +1,5 @@
 # views.py
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -33,4 +33,8 @@ class UsuarioCreateView(LoginRequiredMixin, CreateView):
 class UsuarioUpdateView(LoginRequiredMixin, UpdateView):
     model = Usuario
     fields = ["username", "email"]
+    success_url = reverse_lazy("usuario_list")
+    
+class UsuarioDeleteView(LoginRequiredMixin, DeleteView):
+    model = Usuario
     success_url = reverse_lazy("usuario_list")

@@ -5,12 +5,22 @@
 {% endblock %}
 
 {% block title %}
-	
-	Cadastro de Conta Bancária
+    {% if object %}
+        Editar Conta Bancária
+    {% else %}
+        Cadastro de Conta Bancária
+    {% endif %}
 {% endblock %}
 
 {% block content %}
-<h1>{% bootstrap_icon 'folder-open' %} Cadastro de Conta Bancária</h1>
+<h1>
+  {% bootstrap_icon 'folder-open' %} 
+  {% if object %}
+      Editar Conta Bancária
+  {% else %}
+      Cadastro de Conta Bancária
+  {% endif %}
+</h1>
 <form class="form" role="form" method="POST">
   {% csrf_token %}
   {{ form.non_field_errors }}

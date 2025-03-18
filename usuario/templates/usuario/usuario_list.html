@@ -7,14 +7,17 @@
 
 {% block content %}
 <h1>{% bootstrap_icon 'user' %} Usuário</h1>
+{%if user.tipo == "ADMINISTRADOR" %}
 	<div class="panel panel-default">
 	  <div class="panel-body">
-	    
-		<a href="{% url 'usuario_create' %}" class="btn btn-success">
+	   
+		<a href="{% url 'usuario_create' %}" class="btn btn-primary">
 			{% bootstrap_icon 'plus' %} Adicionar Novo Usuário
 		  </a>
+		
 	  </div>
 	</div>
+	{%endif%}
 	<table class="table table-hover">
   		<thead>
   			<th>Nome</th>
@@ -22,6 +25,7 @@
   			<th>E-mail</th>
   			<th>Último acesso</th>
   			<th class="text-center">Editar</th>
+			<th class="text-center">Excluír</th>
   			<!--<th class="text-center">Excluir</th>-->
   		</thead>
   		<tbody>
@@ -34,9 +38,9 @@
 					<td class="text-center">
 				          {% bootstrap_button content='' href=usuario.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
 				    </td>
-				   <!--- <td class="text-center">
+				   <td class="text-center">
 				          {% bootstrap_button content='' href=usuario.get_delete_url button_type='link' icon='trash' button_class='btn btn-danger' size='sm' %}
-				    </td>-->
+				    </td>
 				</tr>
 			{% endfor %}
   		</tbody>

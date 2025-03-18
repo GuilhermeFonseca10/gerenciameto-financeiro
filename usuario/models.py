@@ -53,3 +53,6 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 
     def get_absolute_url(self):
         return reverse("usuario_update", args=[str(self.id)])
+    
+    def get_delete_url(self):
+        return reverse("usuario_delete", args=[str(self.id)])

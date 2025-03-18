@@ -38,7 +38,7 @@ class ContaCreateView(LoginRequiredMixin, CreateView):
 
 class ContaUpdateView(LoginRequiredMixin, UpdateView):
     model = Conta
-    fields = ["nome"]
+    fields = ["nome", "saldo", "usuario"]
     success_url = reverse_lazy("conta_list")
 
 
