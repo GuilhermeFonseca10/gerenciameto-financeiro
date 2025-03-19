@@ -1,0 +1,40 @@
+{% extends 'core/base.html' %}
+{% load bootstrap3 %}
+{% block title %}
+    Despesas por Categoria
+{% endblock %}
+
+{% block content %}
+<h1>Categoria: {{categoria.descricao|title}}</h1>
+<table class="table table-hover">
+    <thead>
+        <th>Ganhos</th>
+        <th>Valor</th>
+      <th>Data</th>
+      <th>Conta</th>
+      <th class="text-center">Editar</th>
+        <th class="text-center">Excluir</th>
+    </thead>
+    <tbody>
+        {% for ganho in object_list %}
+          <tr>
+              <td>{{ ganho.ganhos }}</td>
+              <td>{{ ganho.valor }}</td>
+              <td>{{ ganho.data }}</td>
+              <td>{{ ganho.conta }}</td>
+              <td class="text-center">
+                  {% bootstrap_button content='' href=ganho.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
+              </td>
+              <td class="text-center">
+                  {% bootstrap_button content='' href=ganho.get_delete_url button_type='link' icon='trash' button_class='btn btn-danger' size='sm' %}
+              </td>
+          </tr>
+          {% empty %}
+          <tr>
+              <td colspan="7" class="text-center">Nenhuma despesa registrada.</td>
+          </tr>
+      {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'categoria_list' %}" class="btn btn-info">Voltar</a>
+{% endblock %}

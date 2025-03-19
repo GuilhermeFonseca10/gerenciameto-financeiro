@@ -15,7 +15,8 @@
 	<table class="table table-hover">
   		<thead>
   			<th>Descriçao</th>
-  			
+			  <th class="text-center">Despesas</th>
+			  <th class="text-center">Lucros</th>
   			{% comment %} <th>Situação</th> {% endcomment %}
   			<th class="text-center">Editar</th>
 			<th class="text-center">Excluir</th>
@@ -34,6 +35,16 @@
 							{% bootstrap_icon 'thumbs-down' %}
 						{% endif %}
 					</td> {% endcomment %}
+					<td class="text-center">
+						<a href="{% url 'despesas_por_categoria' categoria.id %}" class="btn btn-danger btn-sm">
+							{% bootstrap_icon 'eye-open' %}  Ver Despesas
+						</a>
+					</td>
+					<td class="text-center">
+						<a href="{% url 'lucros_por_categoria' categoria.id %}" class="btn btn-success btn-sm">
+							{% bootstrap_icon 'stats' %} Ver Lucros
+						</a>
+					</td>
 					
 					<td class="text-center">
 				          {% bootstrap_button content='' href=categoria.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
