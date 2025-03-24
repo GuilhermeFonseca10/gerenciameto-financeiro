@@ -21,7 +21,7 @@
         <li><a href="{% url 'lancamento_list' %}">Despesas</a></li>
         <li><a href="{% url 'lucro_list' %}">Lucros</a></li>
         {%if user.tipo == "ADMINISTRADOR" %}
-        <li><a href="{% url 'usuario_list' %}">{% bootstrap_icon 'user' %} Usuário</a></li>
+        <li><a href="{% url 'usuario_list' %}">{% bootstrap_icon 'user' %} Usuários</a></li>
         {%else%}
         <li><a href="{% url 'usuario_list' %}">{% bootstrap_icon 'user' %} Perfil</a></li>
         {%endif%}

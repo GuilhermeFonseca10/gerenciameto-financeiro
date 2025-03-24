@@ -3,7 +3,8 @@ from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy
 from utils.decorators import LoginRequiredMixin
-
+from django.db.models import Q
+from django.core.paginator import Paginator
 from .models import Categoria
 from lancamento.models import Lancamento
 from lucro.models import Lucro
@@ -11,6 +12,12 @@ from lucro.models import Lucro
 
 class CategoriaListView(LoginRequiredMixin, ListView):
     model = Categoria
+    paginate_by = 2
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        if query:
+            return Categoria.objects.filter(Q(descricao__icontains=query))
+        return Categoria.objects.all()
 
 
 class CategoriaCreateView(LoginRequiredMixin, CreateView):

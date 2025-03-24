@@ -1,6 +1,7 @@
-from django.db.models import Sum
+from django.db.models import Q, Sum
 # Create your views here.
 from django.shortcuts import render
+from django.core.paginator import Paginator
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy
@@ -13,10 +14,13 @@ from utils.decorators import LoginRequiredMixin
 
 class LucroListView(LoginRequiredMixin, ListView):
     model = Lucro
-
+    paginate_by = 2
     def get_queryset(self):
         usuario = self.request.user
         print("Usuário autenticado:", usuario)
+        query = self.request.GET.get("q")
+        if query:
+            return Lucro.objects.filter(Q(usuario=usuario) & Q(ganhos__icontains=query))
         return Lucro.objects.filter(usuario=usuario)
 
     def get_context_data(self, **kwargs):

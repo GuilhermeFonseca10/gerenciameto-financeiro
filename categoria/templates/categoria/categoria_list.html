@@ -7,6 +7,23 @@
 
 {% block content %}
 <h1>{% bootstrap_icon 'user' %} Categorias</h1>
+<div style="text-align: right; margin-bottom: 15px;">
+    <form method="GET" class="form-inline">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Buscar categoria..." value="{{ request.GET.q }}">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary">
+                    {% bootstrap_icon 'search' %} Buscar
+                </button>
+				{% if request.GET.q %}
+                <a href="{% url 'categoria_list' %}" class="btn btn-secondary">
+                    {% bootstrap_icon 'remove' %} Limpar
+                </a>
+                {% endif %}
+            </span>
+        </div>
+    </form>
+</div>
 	<div class="panel panel-default">
 	  <div class="panel-body">
 	    <a href="{% url 'categoria_create' %}" class="btn btn-md btn-primary">{% bootstrap_icon 'floppy-disk' %} Cadastrar categoria</a>
@@ -14,7 +31,7 @@
 	</div>
 	<table class="table table-hover">
   		<thead>
-  			<th>Descriçao</th>
+  			<th>Categorias</th>
 			  <th class="text-center">Despesas</th>
 			  <th class="text-center">Lucros</th>
   			{% comment %} <th>Situação</th> {% endcomment %}
@@ -53,7 +70,56 @@
 						{% bootstrap_button content='' href=categoria.get_delete_url button_type='link' icon='trash' button_class='btn btn-danger' size='sm' %}
 				  </td>
 				</tr>
+				{% empty %}
+            <tr>
+                <td colspan="5" class="text-center">Nenhuma categoria encontrada.</td>
+            </tr>
 			{% endfor %}
   		</tbody>
 	</table>
+	<!--<div style="text-align: right; margin-bottom: 15px;">-->
+	<nav aria-label="Paginação">
+		<ul class="pagination justify-content-center">
+			{% if page_obj.paginator.num_pages > 1 %}
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?q={{ request.GET.q }}&page=1" aria-label="Primeira">
+                        <span aria-hidden="true">&laquo;&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?q={{ request.GET.q }}&page={{ page_obj.previous_page_number }}" aria-label="Anterior">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">{{ num }} <span class="sr-only">(atual)</span></span>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?q={{ request.GET.q }}&page={{ num }}">{{ num }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?q={{ request.GET.q }}&page={{ page_obj.next_page_number }}" aria-label="Próxima">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?q={{ request.GET.q }}&page={{ page_obj.paginator.num_pages }}" aria-label="Última">
+                        <span aria-hidden="true">&raquo;&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+        {% endif %}
+    </ul>
+</nav>
+<!--</div>-->
 {% endblock %}

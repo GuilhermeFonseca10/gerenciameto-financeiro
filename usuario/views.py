@@ -1,4 +1,6 @@
 # views.py
+from django.db.models import Q
+from django.core.paginator import Paginator
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.core.exceptions import PermissionDenied
@@ -7,9 +9,12 @@ from .models import Usuario
 
 class UsuarioListView(LoginRequiredMixin, ListView):
     model = Usuario
-
+    paginate_by = 2
     def get_queryset(self):
         if self.request.user.is_superuser:
+            query = self.request.GET.get("q")
+            if query:
+                return Usuario.objects.filter(Q(username__icontains=query) or Q(email__icontains=query))
             return Usuario.objects.all()
         else:
             return Usuario.objects.filter(id=self.request.user.id)

@@ -1,4 +1,6 @@
 from django.db.models import Sum
+from django.db.models import Q
+from django.core.paginator import Paginator
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy
@@ -9,9 +11,13 @@ from django.contrib import messages
 from .models import Conta
 class LancamentoListView(LoginRequiredMixin, ListView):
     model = Lancamento
+    paginate_by = 2
 
     def get_queryset(self):
         usuario = self.request.user
+        query = self.request.GET.get("q")
+        if query:
+            return Lancamento.objects.filter(Q(usuario=usuario) & Q(dispesa__icontains=query))
 
         return Lancamento.objects.filter(usuario=usuario)
     def get_context_data(self, **kwargs):
