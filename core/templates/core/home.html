@@ -4,78 +4,79 @@
 {% block title %}💸FinanceG - Seu sistema de gerenciamento financeiro{% endblock %}
 
 {% block content %}
-    <div class="text-center mb-5">
-        <h2 class="mb-3 text-primary">Bem-vindo ao 💸FinanceG</h2>
-        <h5 class="text-muted">Seu sistema de gerenciamento financeiro</h5>
-        <p class="text-muted">Simplifique suas finanças, acompanhe suas receitas e despesas, e tome decisões mais inteligentes.</p>
+<div class="container my-5">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <h1 class="fw-bold text-primary mb-4">Controle Suas Finanças de Forma Inteligente</h1>
+            <p class="text-muted lead">Monitorize receitas, despesas e tenha uma visão clara do seu dinheiro.</p>
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="/static/images/finance-dashboard.png" alt="Dashboard Financeiro" class="img-fluid rounded shadow-lg">
+        </div>
     </div>
+</div>
 
-    <!-- Título com mais espaçamento em relação aos cards -->
-    <h4 class="mb-5 mt-5 text-primary text-center">💸Controle Seu Dinheiro: Aqui Vão Algumas Dicas para Economizar!</h4>
+    <h4 class="text-primary text-center fw-semibold my-5" style="margin-bottom: 3rem !important;">💡 Dicas para Economizar e Controlar Suas Finanças!</h4>
     
-    <div class="row">
-        {% for notificacao in notificacoes %}
-            <div class="col-xs-12 col-sm-4 col-md-4 mb-4">
-                <div class="panel panel-default custom-panel">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">{{ notificacao.nome }}</h3>
-                    </div>
-                    <div class="panel-body">
-                        <p>{{ notificacao.descricao }}</p>
+    <div class="container">
+        <div class="row mt-4">
+            {% for notificacao in notificacoes %}
+                <div class="col-xs-12 col-sm-4 col-md-4 mb-5">
+                    <div class="panel panel-default custom-panel shadow-lg">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ notificacao.nome }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <p>{{ notificacao.descricao }}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% empty %}
-            <p class="text-muted text-center">Nenhuma notificação disponível.</p>
-        {% endfor %}
+            {% empty %}
+                <p class="text-muted text-center">Nenhuma notificação disponível.</p>
+            {% endfor %}
+        </div>
     </div>
 
     <style>
+        
+
         .custom-panel {
-            border-radius: 10px; /* Bordas arredondadas */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombras para dar efeito de profundidade */
-            overflow: hidden; /* Garante que o conteúdo dentro do painel não saia dos limites */
-            height: 300px; /* Altura fixa para todos os cards */
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            height: 300px;
             display: flex;
             flex-direction: column;
+            background: white;
         }
 
         .custom-panel .panel-heading {
-            background-color: #007bff;
+            background: linear-gradient(135deg, #3274BB, #4A90E2);
             color: white;
             padding: 15px;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             text-align: center;
         }
 
         .custom-panel .panel-body {
-            padding: 15px;
-            flex-grow: 1; /* Faz o corpo do painel preencher o espaço restante */
+            padding: 20px;
+            flex-grow: 1;
             text-align: center;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             color: #555;
         }
 
-        .custom-panel .panel-body p {
-            margin-bottom: 0;
+        .custom-panel:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
 
-        /* Estilo do painel para dispositivos menores */
         @media (max-width: 768px) {
             .custom-panel {
-                height: auto; /* Remove a altura fixa em telas pequenas */
+                height: auto;
             }
-        }
-
-        /* Aumentando o espaçamento inferior do título */
-        h4.mb-5 {
-            margin-bottom: 10px !important; /* Aumentando o espaçamento inferior */
-            margin-top: 30px !important;
-        }
-
-        /* Adicionando espaçamento superior para a seção de cards */
-        .row {
-            margin-top: 30px; /* Mais margem superior entre o título e os cards */
         }
     </style>
 {% endblock %}
+
