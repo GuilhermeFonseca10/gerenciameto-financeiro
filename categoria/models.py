@@ -1,11 +1,14 @@
 # coding: utf-8
 from django.db import models
 from django.urls import reverse
-
+from usuario.models import Usuario
 
 class Categoria(models.Model):
 
     descricao = models.CharField("descrição", max_length=40, unique=True)
+    usuario = models.ForeignKey(
+        Usuario, on_delete=models.CASCADE, null=True, blank=True
+    )
 
     def __str__(self):
         return str(self.descricao)
@@ -16,9 +19,9 @@ class Categoria(models.Model):
     def __unicode__(self):
         self.descricao
 
-    def save(self, *args, **kwargs):
-        self.descricao = self.descricao.upper()
-        super(Categoria, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     self.descricao = self.descricao.upper()
+    #     super(Categoria, self).save(*args, **kwargs)
 
     @property
     def get_absolute_url(self):

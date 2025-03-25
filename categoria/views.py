@@ -3,32 +3,40 @@ from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy
 from utils.decorators import LoginRequiredMixin
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.core.paginator import Paginator
 from .models import Categoria
 from lancamento.models import Lancamento
 from lucro.models import Lucro
+from categoria.forms import CategoriaForm
 
 
 class CategoriaListView(LoginRequiredMixin, ListView):
     model = Categoria
     paginate_by = 2
     def get_queryset(self):
+        usuario = self.request.user
         query = self.request.GET.get("q")
         if query:
-            return Categoria.objects.filter(Q(descricao__icontains=query))
-        return Categoria.objects.all()
+            return Categoria.objects.filter(Q(usuario=usuario) & Q(descricao__icontains=query))
+        return Categoria.objects.filter(usuario=usuario)
 
 
 class CategoriaCreateView(LoginRequiredMixin, CreateView):
     model = Categoria
-    fields = ["descricao"]
+    
+    def get_queryset(self):
+        usuario = self.request.user
+
+        return Categoria.objects.filter(usuario=usuario)
+
+    form_class = CategoriaForm
     success_url = reverse_lazy("categoria_list")
 
 
 class CategoriaUpdateView(LoginRequiredMixin, UpdateView):
     model = Categoria
-    fields = ["descricao"]
+    fields = ["descricao", "usuario"]
     success_url = reverse_lazy("categoria_list")
 
 
@@ -42,13 +50,32 @@ class DespesasPorCategoriaView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         categoria_id = self.kwargs["pk"]
-        return Lancamento.objects.filter(categorias__id=categoria_id, usuario=self.request.user)
+        usuario = self.request.user
+        query = self.request.GET.get("q")  # Captura o termo de busca
+        
+        queryset = Lancamento.objects.filter(categorias__id=categoria_id, usuario=usuario)
+
+        if query:
+            queryset = queryset.filter(Q(dispesa__icontains=query))  # Filtra pelo nome da despesa
+
+        return queryset
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         categoria_id = self.kwargs["pk"]
-        context['categoria'] = Categoria.objects.get(id=categoria_id)  # Obtém a categoria com o id
-        return context
+        
+        context['categoria'] = Categoria.objects.get(id=categoria_id)  # Obtém a categoria
+        
+        # Filtrando os lançamentos com base na pesquisa
+        despesas = self.get_queryset()
+        
+        # Calculando o total das despesas filtradas
+        total_despesas = despesas.aggregate(total=Sum('valor'))['total'] or 0
 
+        context['total_despesas'] = total_despesas
+        context['query'] = self.request.GET.get("q", "")  # Mantém o termo de pesquisa no template
+        
+        return context
 class LucrosPorCategoriaView(LoginRequiredMixin, ListView):
     template_name = "categoria/lucros_por_categoria.html"
     context_object_name = "lucros"

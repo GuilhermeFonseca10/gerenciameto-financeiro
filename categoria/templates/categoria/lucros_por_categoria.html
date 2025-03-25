@@ -10,8 +10,10 @@
     <thead>
         <th>Ganhos</th>
         <th>Valor</th>
+        <th>Conta</th>
+        <th>Categoria</th>
       <th>Data</th>
-      <th>Conta</th>
+      
       <th class="text-center">Editar</th>
         <th class="text-center">Excluir</th>
     </thead>
@@ -20,8 +22,14 @@
           <tr>
               <td>{{ ganho.ganhos }}</td>
               <td>{{ ganho.valor }}</td>
-              <td>{{ ganho.data }}</td>
               <td>{{ ganho.conta }}</td>
+              <td>
+                {% for categoria in ganho.categorias.all %}
+                    {{ categoria.descricao }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </td>
+              <td>{{ ganho.data }}</td>
+             
               <td class="text-center">
                   {% bootstrap_button content='' href=ganho.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
               </td>

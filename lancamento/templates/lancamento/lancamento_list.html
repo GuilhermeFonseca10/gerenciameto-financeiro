@@ -43,8 +43,9 @@
   		<thead>
   			<th>Despesa</th>
   			<th>Valor</th>
-			  <th>Data</th>
 			  <th>Conta</th>
+			  <th>Categoria</th>
+			  <th>Data</th>
   			<th class="text-center">Editar</th>
 			<th class="text-center">Excluir</th>
   		</thead>
@@ -53,8 +54,15 @@
 				<tr>
 					<td>{{ dispesa.dispesa }}</td>
 					<td>{{ dispesa.valor }}</td>
-					<td>{{ dispesa.data }}</td>
 					<td>{{ dispesa.conta }}</td>
+					<td>
+						{% for categoria in dispesa.categorias.all %}
+							{{ categoria.descricao }}{% if not forloop.last %}, {% endif %}
+						{% endfor %}
+					</td>
+					<td>{{ dispesa.data }}</td>
+					
+					
 					<td class="text-center">
 						{% bootstrap_button content='' href=dispesa.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
 					</td>
@@ -108,5 +116,5 @@
 				{% endif %}
 			{% endif %}
 		</ul>
-	<!--</nav>-->
+	</nav>
 {% endblock %}

@@ -6,12 +6,39 @@
 
 {% block content %}
 <h1>Categoria: {{categoria.descricao|title}}</h1>
+<div style="text-align: right; margin-bottom: 15px;">
+    <form method="GET" class="form-inline">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Buscar despesa..." value="{{ request.GET.q }}">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary">
+                    {% bootstrap_icon 'search' %} Buscar
+                </button>
+				{% if request.GET.q %}
+                <a href="{% url 'despesas_por_categoria' categoria.id %}" class="btn btn-secondary">
+                    {% bootstrap_icon 'remove' %} Limpar
+                </a>
+                {% endif %}
+            </span>
+        </div>
+    </form>
+</div>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <span class="badge" style="background-color: #d9534f; color: white;">
+            <strong>Total de Despesas da categoria:</strong> R$ {{ total_despesas|floatformat:2 }}
+          </span>
+    </div>
+</div>
 <table class="table table-hover">
     <thead>
         <th>Despesa</th>
         <th>Valor</th>
-        <th>Data</th>
         <th>Conta</th>
+        <th>Categoria</th>
+        <th>Data</th>
+       
+       
         <th class="text-center">Editar</th>
 		<th class="text-center">Excluir</th>
     </thead>
@@ -20,8 +47,13 @@
         <tr>
             <td>{{ despesa.dispesa }}</td>
             <td>R$ {{ despesa.valor }}</td>
-            <td>{{ despesa.data }}</td>
             <td>{{ despesa.conta }}</td>
+            <td>
+                {% for categoria in despesa.categorias.all %}
+                    {{ categoria.descricao }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </td>
+            <td>{{ despesa.data }}</td>
             <td class="text-center">
                 {% bootstrap_button content='' href=despesa.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
             </td>

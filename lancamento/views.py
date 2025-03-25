@@ -9,6 +9,7 @@ from lancamento.models import Lancamento
 from utils.decorators import LoginRequiredMixin
 from django.contrib import messages
 from .models import Conta
+from .models import Categoria
 class LancamentoListView(LoginRequiredMixin, ListView):
     model = Lancamento
     paginate_by = 2
@@ -42,6 +43,7 @@ class LancamentoCreateView(LoginRequiredMixin, CreateView):
         form = super().get_form(form_class)
         # Filtra as contas para o usuário logado
         form.fields["conta"].queryset = Conta.objects.filter(usuario=self.request.user)
+        form.fields["categorias"].queryset = Categoria.objects.filter(usuario=self.request.user)
         return form
     
     def form_valid(self, form):
@@ -76,6 +78,7 @@ class LancamentoUpdateView(LoginRequiredMixin, UpdateView):
         form = super().get_form(form_class)
         # Filtra as contas para o usuário logado
         form.fields["conta"].queryset = Conta.objects.filter(usuario=self.request.user)
+        form.fields["categorias"].queryset = Categoria.objects.filter(usuario=self.request.user)
         return form
 
     def form_valid(self, form):

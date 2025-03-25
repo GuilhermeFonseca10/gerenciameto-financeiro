@@ -9,6 +9,7 @@ from conta.views import Conta
 from lancamento.models import Lancamento
 from lucro.forms import LucroForm
 from lucro.models import Lucro
+from .models import Categoria
 from utils.decorators import LoginRequiredMixin
 
 
@@ -40,6 +41,13 @@ class LucroCreateView(LoginRequiredMixin, CreateView):
     form_class = LucroForm
     success_url = reverse_lazy("lucro_list")
     
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        # Filtra as contas para o usuário logado
+        form.fields["conta"].queryset = Conta.objects.filter(usuario=self.request.user)
+        form.fields["categorias"].queryset = Categoria.objects.filter(usuario=self.request.user)
+        return form
+    
     def form_valid(self, form):
         form.instance.usuario = self.request.user
         conta = form.instance.conta  # A conta associada ao lucro
@@ -61,6 +69,7 @@ class LucroUpdateView(LoginRequiredMixin, UpdateView):
         form = super().get_form(form_class)
         # Filtra as contas para o usuário logado
         form.fields["conta"].queryset = Conta.objects.filter(usuario=self.request.user)
+        form.fields["categorias"].queryset = Categoria.objects.filter(usuario=self.request.user)
         return form
 
     def form_valid(self, form):
