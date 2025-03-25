@@ -42,10 +42,12 @@ class CategoriaUpdateView(LoginRequiredMixin, UpdateView):
 
 class CategoriaDeleteView(LoginRequiredMixin, DeleteView):
     model = Categoria
+    
     success_url = reverse_lazy("categoria_list")
     
 class DespesasPorCategoriaView(LoginRequiredMixin, ListView):
     template_name = "categoria/despesas_por_categoria.html"
+    paginate_by = 1
     context_object_name = "despesas"
 
     def get_queryset(self):
@@ -79,13 +81,34 @@ class DespesasPorCategoriaView(LoginRequiredMixin, ListView):
 class LucrosPorCategoriaView(LoginRequiredMixin, ListView):
     template_name = "categoria/lucros_por_categoria.html"
     context_object_name = "lucros"
+    paginate_by = 1
 
     def get_queryset(self):
         categoria_id = self.kwargs["pk"]
-        return Lucro.objects.filter(categorias__id=categoria_id, usuario=self.request.user)
+        usuario = self.request.user
+        query = self.request.GET.get("q")  # Captura o termo de busca
+        
+        queryset = Lucro.objects.filter(categorias__id=categoria_id, usuario=usuario)
+
+        if query:
+            queryset = queryset.filter(Q(ganhos__icontains=query))  # Filtra pelo nome do ganho
+
+        return queryset
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         categoria_id = self.kwargs["pk"]
-        context['categoria'] = Categoria.objects.get(id=categoria_id)  # Obtém a categoria com o id
+        
+        context['categoria'] = Categoria.objects.get(id=categoria_id)  # Obtém a categoria
+        
+        # Filtrando os lançamentos com base na pesquisa
+        lucros = self.get_queryset()
+        
+        # Calculando o total das despesas filtradas
+        total_lucros = lucros.aggregate(total=Sum('valor'))['total'] or 0
+
+        context['total_lucros'] = total_lucros
+        context['query'] = self.request.GET.get("q", "")  # Mantém o termo de pesquisa no template
+        
         return context
 
