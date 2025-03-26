@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load static %}
 {% load bootstrap3 %}
 
 {% block title %}💸FinanceG - Seu sistema de gerenciamento financeiro{% endblock %}
@@ -6,77 +7,94 @@
 {% block content %}
 <div class="container my-5">
     <div class="row align-items-center">
-        <div class="col-md-6">
-            <h1 class="fw-bold text-primary mb-4">Controle Suas Finanças de Forma Inteligente</h1>
-            <p class="text-muted lead">Monitorize receitas, despesas e tenha uma visão clara do seu dinheiro.</p>
+        <div class="col-md-2 text-center" style="margin-top: 20px;">
+            <img src="{% static 'logo_financeG.jpg' %}" alt="Dashboard Financeiro" class="logo-redonda">
         </div>
-        <div class="col-md-6 text-center">
-            <img src="/static/images/finance-dashboard.png" alt="Dashboard Financeiro" class="img-fluid rounded shadow-lg">
+        <div class="col-md-8">
+            <h1 class="fw-bold text-primary mb-4" style="color: black">Controle Suas Finanças de Forma Inteligente</h1>
+            <p class="text-muted lead" style="color:black;">Monitorize receitas, despesas e tenha uma visão clara do seu dinheiro.</p>
         </div>
     </div>
 </div>
 
-    <h4 class="text-primary text-center fw-semibold my-5" style="margin-bottom: 3rem !important;">💡 Dicas para Economizar e Controlar Suas Finanças!</h4>
-    
-    <div class="container">
-        <div class="row mt-4">
-            {% for notificacao in notificacoes %}
-                <div class="col-xs-12 col-sm-4 col-md-4 mb-5">
-                    <div class="panel panel-default custom-panel shadow-lg">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">{{ notificacao.nome }}</h3>
-                        </div>
-                        <div class="panel-body">
-                            <p>{{ notificacao.descricao }}</p>
-                        </div>
+<h4 class="text-primary text-center fw-semibold my-5" style="margin-bottom: 3rem !important; color: black">💡 Dicas para Economizar e Controlar Suas Finanças!</h4>
+
+<div class="container">
+    <div class="row mt-4">
+        {% for notificacao in notificacoes %}
+            <div class="col-xs-12 col-sm-4 col-md-4 mb-5">
+                <div class="panel panel-default custom-panel shadow-lg">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ notificacao.nome }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>{{ notificacao.descricao }}</p>
                     </div>
                 </div>
-            {% empty %}
-                <p class="text-muted text-center">Nenhuma notificação disponível.</p>
-            {% endfor %}
-        </div>
+            </div>
+        {% empty %}
+            <p class="text-muted text-center">Nenhuma notificação disponível.</p>
+        {% endfor %}
     </div>
+</div>
 
-    <style>
-        
+<style>
+    .custom-panel {
+        border-radius: 12px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        background: white;
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
 
+    .custom-panel .panel-heading {
+        background: linear-gradient(135deg, black,rgb(45, 83, 128));
+        color: white;
+        padding: 15px;
+        font-size: 1.3rem;
+        text-align: center;
+    }
+
+    .custom-panel .panel-body {
+        padding: 20px;
+        flex-grow: 1;
+        text-align: center;
+        font-size: 1.4rem;
+        color: #555;
+    }
+
+    .custom-panel:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .logo-redonda {
+        width: 100px; /* Ajuste o tamanho da imagem */
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #ddd;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease; /* Adiciona uma animação suave */
+    }
+
+    .logo-redonda:hover {
+        transform: scale(1.1); /* Aumenta a imagem levemente ao passar o mouse */
+    }
+
+    @media (max-width: 768px) {
         .custom-panel {
-            border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            height: 300px;
-            display: flex;
-            flex-direction: column;
-            background: white;
+            height: auto;
         }
-
-        .custom-panel .panel-heading {
-            background: linear-gradient(135deg, #3274BB, #4A90E2);
-            color: white;
-            padding: 15px;
-            font-size: 1.3rem;
+        .col-md-8 {
             text-align: center;
         }
-
-        .custom-panel .panel-body {
-            padding: 20px;
-            flex-grow: 1;
-            text-align: center;
-            font-size: 1.4rem;
-            color: #555;
+        .col-md-2 {
+            margin-top: 20px;
         }
-
-        .custom-panel:hover {
-            transform: translateY(-5px);
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        @media (max-width: 768px) {
-            .custom-panel {
-                height: auto;
-            }
-        }
-    </style>
+    }
+</style>
 {% endblock %}
-

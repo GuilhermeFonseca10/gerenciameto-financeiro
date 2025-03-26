@@ -1,4 +1,5 @@
 {% load bootstrap3 %}
+{% load static %}
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     
@@ -9,12 +10,17 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{% url 'home' %}">{% bootstrap_icon 'usd' %}</a>
+      <a class="navbar-brand" href="{% url 'home' %}"></a>
     </div>
-
-   
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
+        <li>
+          <a class="" href="{% url 'home' %}">
+            <div style="display: flex; align-items: center;">
+              <img src="{% static 'logo_financeG.jpg' %}" alt="Logo" class="navbar-logo">
+            </div>
+          </a>
+        </li>
         <li class=""><a href="{% url 'home' %}"> {% bootstrap_icon 'home' %} Home <span class="sr-only">(current)</span></a></li>
         <li><a href="{% url 'conta_list'%}">{% bootstrap_icon 'wallet' %} Saldo em Contas</a></li>
         <li><a href="{% url 'categoria_list' %}">Categorias</a></li>
@@ -60,3 +66,42 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+<style>
+  .navbar-logo {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 8px;
+}
+  
+  .navbar-nav {
+    display: flex;
+    align-items: center; /* Mantém os itens centralizados verticalmente */
+  }
+
+  .navbar-nav.navbar-right {
+    margin-left: auto; /* Empurra o conteúdo para a direita */
+    display: flex; /* Garante que os itens da parte direita sejam flexíveis */
+    align-items: center; /* Centraliza os itens verticalmente */
+}
+  
+  .navbar-brand {
+    display: flex;
+    align-items: center; /* Mantém a logo alinhada com os links */
+    padding: 5px 10px; /* Reduz o padding para não aumentar a navbar */
+    height: 50px; /* Mantém a altura da navbar padrão */
+    line-height: 50px;
+  }
+  @media (max-width: 768px) {
+    .navbar-nav {
+        display: block; /* Garante que os itens fiquem um abaixo do outro */
+        text-align: left; /* Mantém alinhamento correto */
+    }
+    
+    .navbar-nav > li {
+        display: block;
+        width: 100%;
+    }
+}
+</style>
