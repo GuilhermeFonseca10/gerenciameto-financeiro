@@ -3,32 +3,172 @@
 {% load bootstrap3 %}
 {% load static %}
 
-{% block title %}💸MoneyFlow / Login{% endblock %}
+{% block title %}💸FinanceG / Login{% endblock %}
 
 {% block content %}
 
-    <p></p>
-    
-    <div class="row">
-        <div class="col-sm-6 col-md-4 col-md-offset-4">
-            <h1 class="text-center login-title"><span class="glyphicon glyphicon-usd" style="font-size:100px; margin-top: 20px;"></span></h1>
-            <center>
-              <h3>💸MoneyFlow</h3>
-              <br><br>
-            </center>
-            <div class="account-wall">
-                <form class="form-signin" method="POST">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    html, body {
+        height: 100%;
+        width: 100%;
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+    }
+    .login-container {
+        display: flex;
+        height: 100vh;
+        flex-direction: row; /* Layout padrão: lado a lado */
+    }
+    .login-left {
+        flex: 1;
+        background-color: rgb(2, 26, 51);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        color: white;
+        text-align: center;
+        padding: 20px;
+    }
+    .login-left img {
+        max-width: 180px;
+        margin-bottom: 15px;
+        border-radius: 50%;
+    }
+    .login-right {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+    .login-form {
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+        width: 100%;
+        max-width: 400px;
+    }
+    .login-form h3 {
+        text-align: center;
+        font-weight: bold;
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .form-group label {
+        font-weight: bold;
+        font-size: 14px;
+        color: #333;
+        display: block;
+        margin-bottom: 5px;
+    }
+    .form-group input {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        outline: none;
+        transition: border-color 0.3s ease;
+    }
+    .form-group input:focus {
+        border-color: rgb(2, 26, 51);
+        box-shadow: 0 0 8px rgba(2, 26, 51, 0.3);
+    }
+    .btn-primary {
+      background-color: rgb(2, 26, 51);
+      border: none;
+      padding: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      width: 100%;
+      border-radius: 8px;
+      color: white;
+      transition: all 0.3s ease-in-out;
+      cursor: pointer; /
+    }
+    .btn-primary:hover {
+    background-color: #001a33;
+    transform: scale(1.05); /* Efeito de leve crescimento */
+    box-shadow: 0px 4px 10px rgba(0, 26, 51, 0.3);
+    }
+    .btn-primary:active {
+      transform: scale(0.98); /* Pequena redução ao clicar */
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+        .login-container {
+            flex-direction: column; /* Empilha os elementos */
+            height: auto;
+        }
+        .login-left {
+            flex: none;
+            width: 100%;
+            padding: 30px 20px;
+        }
+        .login-right {
+            flex: none;
+            width: 100%;
+            padding: 20px;
+        }
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-left">
+        <img src="{% static 'logo_financeG.jpg' %}" alt="Logo FinanceG">
+        <h2>Bem-vindo ao FinanceG</h2>
+        <p>Gerencie suas finanças com segurança e eficiência.</p>
+    </div>
+    <div class="login-right">
+        <div class="login-form">
+            <h3>Login</h3>
+            <form class="form-signin" method="POST">
                 {% csrf_token %}
-                {% bootstrap_form form %}
-                <span class="clearfix"></span>
-                <p style="text-align:center;">
-                  <button type="submit" class="btn btn-primary btn-small">
-                    {% bootstrap_icon 'glyphicon glyphicon-off' %} Entrar
-                  </button>
+                
+                <div class="form-group">
+                    <label for="id_username">Usuário</label>
+                    <input type="text" name="username" id="id_username" class="form-control" placeholder="Digite seu usuário">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_password">Senha</label>
+                    <input type="password" name="password" id="id_password" class="form-control" placeholder="Digite sua senha">
+                </div>
+
+                <p class="text-center">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-off"></i> Login
+                    </button>
                 </p>
-                </form>
+            </form>
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger" style="
+                background-color: #f8d7da; 
+                border: 1px solid #f5c6cb; 
+                color: #721c24; 
+                padding: 10px; 
+                margin-top: 20px; 
+                border-radius: 8px;
+                text-align: center;
+                font-weight: bold;">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
             </div>
+        {% endif %}
         </div>
     </div>
-  
+</div>
+
 {% endblock %}
