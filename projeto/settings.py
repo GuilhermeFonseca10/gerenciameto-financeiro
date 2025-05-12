@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "conta",
     "lancamento",
     "lucro",
+    "whitenoise",
 ]
 
 MIDDLEWARE = [
