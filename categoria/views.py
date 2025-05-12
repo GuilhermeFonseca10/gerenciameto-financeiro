@@ -13,7 +13,7 @@ from categoria.forms import CategoriaForm
 
 class CategoriaListView(LoginRequiredMixin, ListView):
     model = Categoria
-    paginate_by = 2
+    paginate_by = 10
     def get_queryset(self):
         usuario = self.request.user
         query = self.request.GET.get("q")
@@ -47,7 +47,7 @@ class CategoriaDeleteView(LoginRequiredMixin, DeleteView):
     
 class DespesasPorCategoriaView(LoginRequiredMixin, ListView):
     template_name = "categoria/despesas_por_categoria.html"
-    paginate_by = 1
+    paginate_by = 10
     context_object_name = "despesas"
 
     def get_queryset(self):
@@ -81,7 +81,7 @@ class DespesasPorCategoriaView(LoginRequiredMixin, ListView):
 class LucrosPorCategoriaView(LoginRequiredMixin, ListView):
     template_name = "categoria/lucros_por_categoria.html"
     context_object_name = "lucros"
-    paginate_by = 1
+    paginate_by = 10
 
     def get_queryset(self):
         categoria_id = self.kwargs["pk"]

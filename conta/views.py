@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 
 class ContaListView(LoginRequiredMixin, ListView):
     model = Conta
-    paginate_by = 2
+    paginate_by = 10
 
     def get_queryset(self):
         usuario = self.request.user

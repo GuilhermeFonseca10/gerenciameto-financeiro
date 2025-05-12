@@ -9,7 +9,7 @@ from .models import Usuario
 
 class UsuarioListView(LoginRequiredMixin, ListView):
     model = Usuario
-    paginate_by = 2
+    paginate_by = 10
     def get_queryset(self):
         if self.request.user.is_superuser:
             query = self.request.GET.get("q")

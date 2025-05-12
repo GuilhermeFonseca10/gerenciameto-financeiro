@@ -12,7 +12,7 @@ from .models import Conta
 from .models import Categoria
 class LancamentoListView(LoginRequiredMixin, ListView):
     model = Lancamento
-    paginate_by = 2
+    paginate_by = 10
 
     def get_queryset(self):
         usuario = self.request.user

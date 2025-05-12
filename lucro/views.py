@@ -15,7 +15,7 @@ from utils.decorators import LoginRequiredMixin
 
 class LucroListView(LoginRequiredMixin, ListView):
     model = Lucro
-    paginate_by = 2
+    paginate_by = 10
     def get_queryset(self):
         usuario = self.request.user
         print("Usuário autenticado:", usuario)
